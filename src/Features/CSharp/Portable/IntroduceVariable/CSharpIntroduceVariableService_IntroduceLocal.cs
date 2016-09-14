@@ -308,9 +308,9 @@ namespace Microsoft.CodeAnalysis.CSharp.IntroduceVariable
 
             var newInnerMostBlock = Rewrite(
                 document, expression, newLocalName, document, oldInnerMostCommonBlock, allOccurrences, cancellationToken);
-	
-			var finalInnerMostBlock = newInnerMostBlock.WithStatements(
-				CreateNewStatementList(newInnerMostBlock.Statements, declarationStatement, firstStatementAffectedInBlock, firstStatementAffectedIndex));
+
+            var finalInnerMostBlock = newInnerMostBlock.WithStatements(
+                CreateNewStatementList(newInnerMostBlock.Statements, declarationStatement, firstStatementAffectedInBlock, firstStatementAffectedIndex));
 
             var newRoot = document.Root.ReplaceNode(oldInnerMostCommonBlock, finalInnerMostBlock);
             return document.Document.WithSyntaxRoot(newRoot);

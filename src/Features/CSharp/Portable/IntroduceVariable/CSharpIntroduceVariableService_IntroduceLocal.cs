@@ -311,7 +311,9 @@ namespace Microsoft.CodeAnalysis.CSharp.IntroduceVariable
 
             var statements = new List<StatementSyntax>();
             statements.AddRange(newInnerMostBlock.Statements.Take(firstStatementAffectedIndex));
-            statements.Add(declarationStatement);
+            var options = await document.Document.GetOptionsAsync().ConfigureAwait(false);
+            var endOfLine = SyntaxFactory.ElasticEndOfLine(options.GetOption(FormattingOptions.NewLine, LanguageNames.CSharp));
+            statements.Add(declarationStatement.WithTrailingTrivia(endOfLine));
             statements.AddRange(newInnerMostBlock.Statements.Skip(firstStatementAffectedIndex));
 
             var finalInnerMostBlock = newInnerMostBlock.WithStatements(
